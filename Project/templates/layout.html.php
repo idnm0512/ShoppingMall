@@ -16,9 +16,10 @@
 
         <ul>
             <li><a href="/">Home</a></li>
-            <?php if (!empty($_SESSION['user_id'])) : ?>
-                <li><?= $_SESSION['user_id'] ?>님, ㅎㅇ</li>
+            <?php if (!empty($_SESSION['id'])) : ?>
+                <li><a href="/user/info"><?= $_SESSION['id'] ?></a>님, ㅎㅇ</li>
                 <li><a href="/user/logout">로그아웃</a></li>
+                <li><a href="/user/withdraw">회원탈퇴</a></li>
             <?php else : ?>
                 <li><a href="/user/login">로그인</a></li>
                 <li><a href="/user/join">회원가입</a></li>

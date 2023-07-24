@@ -10,19 +10,16 @@
 
 <p>
     <form action="" method="post">
+        <input type="hidden" id="idx" name="user[idx]" value="<?= $_SESSION['user_idx'] ?>">
+        <input type="hidden" id="status" name="user[status]" value="0">
         <ul>
             <li>
-                <label for="userId">아이디:</label>
-                <input type="text" id="userId" name="user[id]" value="<?= $user['id'] ?? '' ?>">
-            </li>
-
-            <li>
                 <label for="password">패스워드:</label>
-                <input type="password" id="password" name="user[password]" value="<?= $user['password'] ?? '' ?>">
+                <input type="password" id="password" name="user[password]" value="">
             </li>
 
             <li>
-                <input type="submit" value="로그인">
+                <input type="submit" value="회원탈퇴">
             </li>
         </ul>
     </form>

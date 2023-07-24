@@ -13,42 +13,42 @@
         <ul>
             <li>
                 <label for="userId">*아이디:</label>
-                <input type="text" id="userId" name="user[user_id]" value="<?= $user['user_id'] ?? '' ?>"><br>
+                <input type="text" id="userId" name="user[id]" value="<?= $user['id'] ?? '' ?>">
             </li>
 
             <li>
                 <label for="password">*패스워드:</label>
-                <input type="password" id="password" name="user[password]" value="<?= $user['password'] ?? '' ?>"><br>
+                <input type="password" id="password" name="user[password]" value="<?= $user['password'] ?? '' ?>">
             </li>
 
             <li>
                 <label for="name">*이름:</label>
-                <input type="text" id="name" name="user[name]" value="<?= $user['name'] ?? '' ?>"><br>
+                <input type="text" id="name" name="user[name]" value="<?= $user['name'] ?? '' ?>">
             </li>
 
             <li>
             <label for="email">*이메일:</label>
-            <input type="text" id="email" name="user[email]" value="<?= $user['email'] ?? '' ?>"><br>
+            <input type="text" id="email" name="user[email]" value="<?= $user['email'] ?? '' ?>">
             </li>
 
             <li>
                 <label for="birth">*생년월일:</label>
-                <input type="text" id="birth" name="user[birth]" value="<?= $user['birth'] ?? '' ?>"><br>
+                <input type="text" id="birth" name="user[birth]" value="<?= $user['birth'] ?? '' ?>">
             </li>
 
             <li>
-                <label>성별:</label>
-                <input type="radio" id="genderChoice1" name="user[gender]" value="0" checked>
+                <label>*성별:</label>
+                <input type="radio" id="genderChoice1" name="user[gender]" value="0" <?php if ($user['gender'] == 0) { echo 'checked'; } ?>>
                 <label for="genderChoice1">선택안함</label>
-                <input type="radio" id="genderChoice2" name="user[gender]" value="1">
+                <input type="radio" id="genderChoice2" name="user[gender]" value="1" <?php if ($user['gender'] == 1) { echo 'checked'; } ?>>
                 <label for="genderChoice2">남</label>
-                <input type="radio" id="genderChoice3" name="user[gender]" value="2">
-                <label for="genderChoice3">여</label><br>
+                <input type="radio" id="genderChoice3" name="user[gender]" value="2" <?php if ($user['gender'] == 2) { echo 'checked'; } ?>>
+                <label for="genderChoice3">여</label>
             </li>
 
             <li>
                 <label for="phone">*핸드폰번호:</label>
-                <input type="text" id="phone" name="user[phone]" value="<?= $user['phone'] ?? '' ?>"><br>
+                <input type="text" id="phone" name="user[phone]" value="<?= $user['phone'] ?? '' ?>">
             </li>
 
             <li>

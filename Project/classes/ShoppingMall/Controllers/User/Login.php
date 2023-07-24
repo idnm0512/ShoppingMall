@@ -1,5 +1,5 @@
 <?php
-    namespace ShoppingMall\Controllers;
+    namespace ShoppingMall\Controllers\User;
 
     use Common\Authentication;
 
@@ -11,31 +11,20 @@
             $this -> authentication = $authentication;
         }
 
-        public function loginForm() {
+        public function getLoginForm() {
             return [
                 'template' => 'loginForm.html.php',
                 'title' => '로그인'
             ];
         }
 
-        public function loginProcess() {
+        public function login() {
             $userReq = $_POST['user'];
 
-            $valid = true;
-            $errors = [];
-
-            if (empty($userReq['user_id'])) {
-                $valid = false;
-                $errors[] = '아이디를 입력하세요.';
-            }
-
-            if (empty($userReq['password'])) {
-                $valid = false;
-                $errors[] = '패스워드를 입력하세요.';
-            }
+            $errors = blankCheck($userReq);
             
-            if ($valid == true) {
-                if ($this -> authentication -> login($userReq['user_id'], $userReq['password'])) {
+            if (empty($errors)) {
+                if ($this -> authentication -> loginProcess($userReq['id'], $userReq['password'])) {
                     header('location: /');
                 } else {
                     $errors[] = '아이디/패스워드가 유효하지 않습니다.';
@@ -58,5 +47,11 @@
                     ]
                 ];
             }
+        }
+
+        public function logout() {
+            session_unset();
+
+            header('location: /');
         }
     }
