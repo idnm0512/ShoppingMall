@@ -2,7 +2,10 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+
     <!-- <link rel="stylesheet" href=".css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <title><?= $title ?></title>
 </head>
 <body>
@@ -13,6 +16,13 @@
 
         <ul>
             <li><a href="/">Home</a></li>
+            <?php if (!empty($_SESSION['user_id'])) : ?>
+                <li><?= $_SESSION['user_id'] ?>님, ㅎㅇ</li>
+                <li><a href="/user/logout">로그아웃</a></li>
+            <?php else : ?>
+                <li><a href="/user/login">로그인</a></li>
+                <li><a href="/user/join">회원가입</a></li>
+            <?php endif; ?>
         </ul>
     </nav>
 

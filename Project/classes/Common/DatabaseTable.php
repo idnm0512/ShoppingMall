@@ -109,25 +109,25 @@
         }
 
         private function insert($parameters) {
-            $query = 'INSERT INTO `' . $this -> tableName . '` (';
+            $strQuery = 'INSERT INTO `' . $this -> tableName . '` (';
 
             foreach ($parameters as $key => $value) {
-                $query .= '`' . $key . '`,';
+                $strQuery .= '`' . $key . '`,';
             }
 
-            $query = rtrim($query, ',');
-            $query .= ') VALUES (';
+            $strQuery = rtrim($strQuery, ',');
+            $strQuery .= ') VALUES (';
 
             foreach ($parameters as $key => $value) {
-                $query .= ':' . $key . ',';
+                $strQuery .= ':' . $key . ',';
             }
 
-            $query = rtrim($query, ',');
-            $query .= ')';
+            $strQuery = rtrim($strQuery, ',');
+            $strQuery .= ')';
 
             $parameters = $this -> formatDate($parameters);
 
-            $this -> query($query, $parameters);
+            $this -> query($strQuery, $parameters);
 
             $lastInsertId = $this -> pdo -> lastInsertId();
 
@@ -135,20 +135,20 @@
         }
 
         private function update($parameters) {
-            $query = 'UPDATE `' . $this -> tableName . '` SET ';
+            $strQuery = 'UPDATE `' . $this -> tableName . '` SET ';
 
             foreach ($parameters as $key => $value) {
-                $query .= '`' . $key . '` = :' . $key . ',';
+                $strQuery .= '`' . $key . '` = :' . $key . ',';
             }
 
-            $query = rtrim($query, ',');
-            $query .= ' WHERE `' . $this -> primaryKeyName . '` = :value';
+            $strQuery = rtrim($strQuery, ',');
+            $strQuery .= ' WHERE `' . $this -> primaryKeyName . '` = :value';
 
             $parameters[':value'] = $parameters['id'];
 
             $parameters = $this -> formatDate($parameters);
 
-            $this -> query($query, $parameters);
+            $this -> query($strQuery, $parameters);
         }
 
         public function deleteByColumn($columnName, $value) {

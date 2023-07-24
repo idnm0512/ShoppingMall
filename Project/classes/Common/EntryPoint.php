@@ -1,23 +1,27 @@
 <?php
     namespace Common;
 
+    use Common\Uri;
+
     class EntryPoint {
-
+        
         private $uri;
-        private $request_uri;
-        private $request_method;
+        private $reqUri;
+        private $reqMethod;
 
-        public function __construct(Uri $uri, string $request_uri, string $request_method) {
+        public function __construct(Uri $uri, string $reqUri, string $reqMethod) {
             $this -> uri = $uri;
-            $this -> request_uri = $request_uri;
-            $this -> request_method = $request_method;
+            $this -> reqUri = $reqUri;
+            $this -> reqMethod = $reqMethod;
+
             $this -> checkUri();
         }
 
         private function checkUri() {
-            if ($this -> request_uri !== strtolower($this -> request_uri)) {
+            if ($this -> reqUri !== strtolower($this -> reqUri)) {
                 http_response_code(301);
-                header('location: ' . strtolower($this -> request_uri));
+
+                header('location: ' . strtolower($this -> reqUri));
             }
         }
 
@@ -34,24 +38,20 @@
         public function run() {
             $uri = $this -> uri -> getUri();
 
-            $controller = $uri[$this -> request_uri][$this -> request_method]['controller'];
-            $action = $uri[$this -> request_uri][$this -> request_method]['action'];
+            $controller = $uri[$this -> reqUri][$this -> reqMethod]['controller'];
+            $action = $uri[$this -> reqUri][$this -> reqMethod]['action'];
 
-            $result = $controller -> $action();
+            $pageInfo = $controller -> $action();
 
-            if (isset($result['variables'])) {
-                $output = $this -> loadTemplate($result['template'], $result['variables']);
+            if (isset($pageInfo['variables'])) {
+                $output = $this -> loadTemplate($pageInfo['template'], $pageInfo['variables']);
             } else {
-                $output = $this -> loadTemplate($result['template']);
+                $output = $this -> loadTemplate($pageInfo['template']);
             }
 
-            $layoutTemplate = 'layout.html.php';
-
-            $variables = [
+            echo $this -> loadTemplate('layout.html.php', [
                 'output' => $output,
-                'title' => $result['title']
-            ];
-
-            echo $this -> loadTemplate($layoutTemplate, $variables);
+                'title' => $pageInfo['title']
+            ]);
         }
     }
