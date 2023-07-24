@@ -18,7 +18,7 @@
             $this -> constructorArgs = $constructorArgs;
         }
 
-        public function query($strQuery, $parameters = []) {
+        private function query($strQuery, $parameters = []) {
             $query = $this -> pdo -> prepare($strQuery);
 
             $query -> execute($parameters);
