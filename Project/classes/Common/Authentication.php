@@ -6,24 +6,26 @@
     class Authentication {
 
         private $userTable;
-        private $userIdColumnName;
-        private $userPwdColumnName;
+        private $userIdColumn;
+        private $userPwdColumn;
         
-        public function __construct(DatabaseTable $userTable, string $userIdColumnName, string $userPwdColumnName) {
+        public function __construct(DatabaseTable $userTable, string $userIdColumn, string $userPwdColumn) {
             session_start();
 
             $this -> userTable = $userTable;
-            $this -> userIdColumnName = $userIdColumnName;
-            $this -> userPwdColumnName = $userPwdColumnName;
+            $this -> userIdColumn = $userIdColumn;
+            $this -> userPwdColumn = $userPwdColumn;
         }
 
-        public function login($userIdValue, $userPwdValue) {
-            $userRes = $this -> userTable -> findByColumn($this -> userIdColumnName, $userIdValue);
+        public function loginProcess($userIdValue, $userPwdValue): bool {
+            $userRes = $this -> userTable -> findByColumn($this -> userIdColumn, $userIdValue);
 
-            if (!empty($userRes) && password_verify($userPwdValue, $userRes[0] -> {$this -> userPwdColumnName})) {
+            if (!empty($userRes) && $userRes[0] -> status != 0 && password_verify($userPwdValue, $userRes[0] -> {$this -> userPwdColumn})) {
                 session_regenerate_id();
 
-                $_SESSION['user_id'] = $userRes[0] -> {$this -> userIdColumnName};
+                $_SESSION['user_idx'] = $userRes[0] -> idx;
+                $_SESSION['id'] = $userRes[0] -> {$this -> userIdColumn};
+                $_SESSION['password'] = $userRes[0] -> {$this -> userPwdColumn};
 
                 return true;
             } else {

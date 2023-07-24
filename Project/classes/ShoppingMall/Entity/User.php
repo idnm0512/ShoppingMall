@@ -3,8 +3,8 @@
 
     class User {
         
+        public $idx;
         public $id;
-        public $user_id;
         public $password;
         public $name;
         public $email;
@@ -13,6 +13,7 @@
         public $phone;
         public $insert_date;
         public $update_date;
+        public $status;
 
         
     }

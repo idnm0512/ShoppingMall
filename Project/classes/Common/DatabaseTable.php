@@ -70,11 +70,11 @@
             return $result;
         }
 
-        public function findById($id) {
+        public function findById($idx) {
             $strQuery = 'SELECT * FROM `' . $this -> tableName . '` WHERE `' . $this -> primaryKeyName . '` = :value';
 
             $parameters = [
-                ':value' => $id
+                ':value' => $idx
             ];
 
             $query = $this -> query($strQuery, $parameters);
@@ -92,10 +92,14 @@
                     $parameters[$this -> primaryKeyName] = null;
                 }
 
+                $parameters['insert_date'] = new \DateTime();
+
                 $lastInsertId = $this -> insert($parameters);
 
                 $entity -> {$this -> primaryKeyName} -> $lastInsertId;
             } catch (\PDOException $e) {
+                $parameters['update_date'] = new \DateTime();
+
                 $this -> update($parameters);
             }
 
@@ -144,7 +148,7 @@
             $strQuery = rtrim($strQuery, ',');
             $strQuery .= ' WHERE `' . $this -> primaryKeyName . '` = :value';
 
-            $parameters[':value'] = $parameters['id'];
+            $parameters[':value'] = $parameters['idx'];
 
             $parameters = $this -> formatDate($parameters);
 
@@ -161,11 +165,11 @@
             $this -> query($strQuery, $parameters);
         }
 
-        public function deleteById($id) {
+        public function deleteById($idx) {
             $strQuery = 'DELETE FROM `' . $this -> tableName . '` WHERE `' . $this -> primaryKeyName . '` = :value';
 
             $parameters = [
-                ':value' => $id
+                ':value' => $idx
             ];
 
             $this -> query($strQuery, $parameters);

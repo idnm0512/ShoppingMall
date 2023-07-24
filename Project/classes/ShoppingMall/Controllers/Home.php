@@ -4,11 +4,9 @@
     class Home {
 
         public function home() {
-            $result = [
+            return [
                 'template' => 'home.html.php',
                 'title' => '홈'
             ];
-
-            return $result;
         }
     }

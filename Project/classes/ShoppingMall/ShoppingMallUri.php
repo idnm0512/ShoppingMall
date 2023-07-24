@@ -1,12 +1,13 @@
 <?php
     namespace ShoppingMall;
 
-    use Common\Authentication;
     use Common\Uri;
     use Common\DatabaseTable;
+    use Common\Authentication;
     use ShoppingMall\Controllers\Home;
-    use ShoppingMall\Controllers\Join;
-    use ShoppingMall\Controllers\Login;
+    use ShoppingMall\Controllers\User\Join;
+    use ShoppingMall\Controllers\User\Login;
+    use ShoppingMall\Controllers\User\User;
 
     class ShoppingMallUri implements Uri {
 
@@ -16,14 +17,15 @@
         public function __construct() {
             include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-            $this -> userTable = new DatabaseTable($pdo, 'user', 'id', 'ShoppingMall\Entity\User', []);
-            $this -> authentication = new Authentication($this -> userTable, 'user_id', 'password');
+            $this -> userTable = new DatabaseTable($pdo, 'user', 'idx', 'ShoppingMall\Entity\User', []);
+            $this -> authentication = new Authentication($this -> userTable, 'id', 'password');
         }
 
         public function getUri(): Array {
             $homeController = new Home();
             $joinController = new Join($this -> userTable);
-            $loginControlelr = new Login($this -> authentication);
+            $loginController = new Login($this -> authentication);
+            $userController = new User($this -> userTable);
 
             $uri = [
                 '' => [
@@ -35,21 +37,47 @@
                 'user/join' => [
                     'GET' => [
                         'controller' => $joinController,
-                        'action' => 'joinForm'
+                        'action' => 'getJoinForm'
                     ],
                     'POST' => [
                         'controller' => $joinController,
-                        'action' => 'saveUser'
+                        'action' => 'join'
                     ]
                 ],
                 'user/login' => [
                     'GET' => [
-                        'controller' => $loginControlelr,
-                        'action' => 'loginForm'
+                        'controller' => $loginController,
+                        'action' => 'getLoginForm'
                     ],
                     'POST' => [
-                        'controller' => $loginControlelr,
-                        'action' => 'loginProcess'
+                        'controller' => $loginController,
+                        'action' => 'login'
+                    ]
+                ],
+                'user/logout' => [
+                    'GET' => [
+                        'controller' => $loginController,
+                        'action' => 'logout'
+                    ]
+                ],
+                'user/withdraw' => [
+                    'GET' => [
+                        'controller' => $userController,
+                        'action' => 'getPwdCheckForm'
+                    ],
+                    'POST' => [
+                        'controller' => $userController,
+                        'action' => 'withdraw'
+                    ]
+                ],
+                'user/info' => [
+                    'GET' => [
+                        'controller' => $userController,
+                        'action' => 'getUserInfoForm'
+                    ],
+                    'POST' => [
+                        'controller' => $userController,
+                        'action' => 'updateUserInfo'
                     ]
                 ],
             ];

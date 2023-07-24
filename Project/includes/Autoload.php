@@ -1,4 +1,5 @@
 <?php
+
     function autoload($className) {
         $fileName = str_replace('\\', '/', $className) . '.php';
 
