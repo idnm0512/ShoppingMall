@@ -25,11 +25,15 @@
             $errors = blankCheck($userReq);
 
             if (!empty($userReq['id']) && count($this -> userTable -> findByColumn('id', $userReq['id'])) > 0) {
-                $errors[] = '이미 존재하는 아이디입니다.';
+                $errors[] = '이미 가입된 아이디입니다.';
             };
 
-            if (!empty($userReq['email']) && filter_var($userReq['email'], FILTER_VALIDATE_EMAIL) == false) {
-                $errors[] = '유효하지 않은 이메일입니다.';
+            if (!empty($userReq['email'])) {
+                if (filter_var($userReq['email'], FILTER_VALIDATE_EMAIL) == false) {
+                    $errors[] = '이메일 형식이 올바르지 않습니다.';
+                } else if (count($this -> userTable -> findByColumn('email', $userReq['email'])) > 0) {
+                    $errors[] = '이미 가입된 이메일입니다.';
+                }
             }
 
             if (empty($errors)) {

@@ -3,8 +3,8 @@
     use ShoppingMall\ShoppingMallUri;
 
     try {
-        include __DIR__ . '/../includes/Autoload.php';
-        include __DIR__ . '/../includes/Util.php';
+        include_once __DIR__ . '/../includes/Autoload.php';
+        include_once __DIR__ . '/../includes/Util.php';
 
         $reqUri = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 

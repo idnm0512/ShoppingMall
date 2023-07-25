@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
 
     <!-- <link rel="stylesheet" href=".css"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     <title><?= $title ?></title>
 </head>
@@ -23,6 +22,7 @@
             <?php else : ?>
                 <li><a href="/user/login">로그인</a></li>
                 <li><a href="/user/join">회원가입</a></li>
+                <li><a href="/user/find-id">아이디 찾기</a> / <a href="/user/find-pwd">패스워드 찾기</a></li>
             <?php endif; ?>
         </ul>
     </nav>
@@ -35,5 +35,7 @@
     <footer>
         Test (footer)
     </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
