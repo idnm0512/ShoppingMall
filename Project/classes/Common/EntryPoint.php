@@ -43,15 +43,17 @@
 
             $pageInfo = $controller -> $action();
 
-            if (isset($pageInfo['variables'])) {
-                $output = $this -> loadTemplate($pageInfo['template'], $pageInfo['variables']);
-            } else {
-                $output = $this -> loadTemplate($pageInfo['template']);
+            if (!empty($pageInfo)) {
+                if (isset($pageInfo['variables'])) {
+                    $output = $this -> loadTemplate($pageInfo['template'], $pageInfo['variables']);
+                } else {
+                    $output = $this -> loadTemplate($pageInfo['template']);
+                }
+    
+                echo $this -> loadTemplate('layout.html.php', [
+                    'output' => $output,
+                    'title' => $pageInfo['title']
+                ]);
             }
-
-            echo $this -> loadTemplate('layout.html.php', [
-                'output' => $output,
-                'title' => $pageInfo['title']
-            ]);
         }
     }
